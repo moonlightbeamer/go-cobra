@@ -1,34 +1,56 @@
 /*
-Copyright © 2021 Mihalis Tsoukalos <mihalistsoukalos@gmail.com>
-*/
+Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 
+*/
 package cmd
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-// A Global variable
-var Special = "This is a special message."
+
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "go-cobra",
 	Short: "A brief description of your application",
-	Long:  `This is a long description of the commnad line application.`,
+	Long: `A longer description that spans multiple lines and likely contains
+examples and usage of using your application. For example:
+
+Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.`,
+	// Uncomment the following line if your bare application
+	// has an action associated with it:
+	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	cobra.CheckErr(rootCmd.Execute())
+	err := rootCmd.Execute()
+	if err != nil {
+		os.Exit(1)
+	}
 }
 
 func init() {
+	// Here you will define your flags and configuration settings.
+	// Cobra supports persistent flags, which, if defined here,
+	// will be global for your application.
+
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.go-cobra.yaml)")
 	rootCmd.PersistentFlags().StringP("directory", "d", "/tmp", "Path to use.")
-	rootCmd.PersistentFlags().Uint("depth", 2, "Depth of search.")
+	rootCmd.PersistentFlags().UintP("depth", "e", 2, "Depth of search.")
 
 	viper.BindPFlag("directory", rootCmd.PersistentFlags().Lookup("directory"))
 	viper.BindPFlag("depth", rootCmd.PersistentFlags().Lookup("depth"))
+	// Cobra also supports local flags, which will only run
+	// when this action is called directly.
+	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
+
+

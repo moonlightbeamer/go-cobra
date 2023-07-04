@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	//"github.com/spf13/viper"
 )
 
 // twoCmd represents the two command
@@ -30,4 +31,5 @@ var twoCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(twoCmd)
 	twoCmd.Flags().StringP("username", "u", "Mike", "Username value")
+	//viper.BindPFlag("username", twoCmd.Flags().Lookup("username"))
 }
